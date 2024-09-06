@@ -1,0 +1,39 @@
+name: Build and Deploy Blazor WASM
+
+on:
+  push:
+    branches:
+      - master  # Trigger the workflow on push to the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # Ensure a full history
+
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'  # Specify the version of .NET you're using
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build Blazor WebAssembly app
+      run: dotnet publish -c Release -o build --no-restore
+
+    - name: Configure Git
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build/wwwroot  # Publish the wwwroot directory
+        force_orphan: true  # Force push to the gh-pages branch as an orphan
