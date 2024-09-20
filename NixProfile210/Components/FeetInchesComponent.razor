@@ -3,22 +3,28 @@
 
 <div class="mb-3">
     <label class="form-label">Feet</label>
-    <NumberInput TValue="int" @bind-Value="@amount" Placeholder="Enter Feet" />
+    <NumberInput TValue="int" @bind-Value="@feet" Placeholder="Enter Feet" />
     <label class="form-label">Inches</label>
-    <NumberInput TValue="int" @bind-Value="@amount2" Placeholder="Enter Inches" />
+    <NumberInput TValue="int" @bind-Value="@inches" Placeholder="Enter Inches" />
+
+    @* sir added a button to his *@
+    @* use this anonymous function method() => when you have a method you want to bind which has parameters *@
+    @* <Button @onclick ="() => ConvertFeetInchesToCM(feet, inches)">Calculate</Button> *@
+
 </div>
-<div class="mb-3">Entered Amount: @ConvertFeetInchesToCM(amount,amount2)</div>
+<div class="mb-3">Amount in centimeter: @ConvertFeetInchesToCM(feet,inches)</div>
 
 @code {
-    private int amount;
-    private int amount2;
+    private int feet;
+    private int inches;
 
     //5ft × 30.48 + 11in × 2.54
 
-    private double ConvertFeetInchesToCM(double length, double inches)
+    private double ConvertFeetInchesToCM(double feet, double inches)
     {
-        return (length * 30.48 + inches * 2.54);
+        return (feet * 30.48 + inches * 2.54);
     }
+
 
 
 
