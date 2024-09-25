@@ -1,0 +1,119 @@
+﻿<h3>Register Component</h3>
+<p>Enter the following required information below: </p>
+<hr />
+<Card>
+    <CardBody>
+        <div class="mb-3">
+            <CardTitle>
+                <label class="form-label">Username: </label>
+            </CardTitle>
+            <CardSubTitle>
+                <InputText id="username" @bind-Value="@username" Placeholder="Enter your username" />
+            </CardSubTitle>
+            
+        </div>
+        @* <div class="mb-3">Username: @username</div> *@
+
+        <div class="mb-3">
+            <CardTitle>
+                <label class="form-label">Email: </label>
+            </CardTitle>
+            <CardSubTitle>
+                <InputText id="email" @bind-Value="@email" Placeholder="Enter your email" />
+            </CardSubTitle>
+            
+        </div>
+        @* <div class="mb-3">Email: @email</div> *@
+
+        <div class="mb-3">
+            <CardTitle>
+                <label class="form-label">Password: </label>
+            </CardTitle>
+            <CardSubTitle>
+                <InputText id="password" @bind-Value="@password" Placeholder="Enter your password" />
+            </CardSubTitle>
+            
+        </div>
+        @* <div class="mb-3">Password: @password</div> *@
+
+        <div class="mb-3">
+            <CardTitle>
+                <label class="form-label">Confirm Password: </label>
+            </CardTitle>
+            <CardSubTitle>
+                <InputText id="confirmPassword" @bind-Value="@confirmPassword" Placeholder="Confirm your password" />
+            </CardSubTitle>
+            
+        </div>
+        @* <div class="mb-3">Confirm Password: @confirmPassword</div> *@
+
+        <div class="mb-3">
+            <CardTitle>
+                <label class="form-label">Date of Birth: </label>
+            </CardTitle>
+            <CardSubTitle>
+                <DateInput TValue="DateTime" @bind-Value="@dateofBirth" Placeholder="Enter Date of Birth" />
+            </CardSubTitle>
+            
+        </div>
+        @* <div class="mb-3">Entered date: @dateofBirth</div> *@
+    </CardBody>
+</Card>
+<hr />
+
+<div>
+    <Button Color="ButtonColor.Primary" Type="ButtonType.Submit" @onclick="() => RegisterUser()">Register</Button>
+</div>
+
+@if (isRegistered)
+{
+    <p class="alert alert-success"> You are registered!!!</p>
+}
+
+@code {
+    private string username { get; set; } = "";
+    private string email { get; set; } = " ";
+    private string password { get; set; } = " ";
+    private string confirmPassword { get; set; } = " ";
+    private DateTime dateofBirth = DateTime.Now.AddYears(-25);
+    private bool isRegistered = false;
+
+    private void RegisterUser()
+    {
+        isRegistered = true;
+        // if (ValidateInput())
+        // {
+        //     isRegistered = true;
+        // }
+    }
+
+    private bool ValidateInput()
+    {
+        if (string.IsNullOrWhiteSpace(username))
+        {
+            return false; 
+        }
+
+        if (string.IsNullOrWhiteSpace(email) || !new System.ComponentModel.DataAnnotations.EmailAddressAttribute().IsValid(email))
+        {
+            return false;    
+        }
+
+        if (string.IsNullOrWhiteSpace(password))
+        {
+            return false;
+        }
+
+        if (password != confirmPassword)
+        {
+            return false;
+        }
+
+        if (dateofBirth == null || dateofBirth > DateTime.Today)
+        {
+            return false;
+        }
+
+        return true;
+    }
+}
