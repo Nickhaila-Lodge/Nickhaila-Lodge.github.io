@@ -1,0 +1,41 @@
+﻿<h3>Login Component</h3>
+
+<Card TextAlignment="Alignment.Center">
+    <CardBody>
+        <CardTitle>
+            <label class="form-label">Username or Email: </label>
+        </CardTitle>
+        <CardSubTitle>
+            <InputText id="username" @bind-Value="@username" Placeholder="Enter username or email" />
+        </CardSubTitle>
+        <br />
+        <CardTitle>
+            <label class="form-label">Password: </label>
+        </CardTitle>
+        <CardSubTitle>
+            <InputText id="password" @bind-Value="@password" Placeholder="Enter password" />
+        </CardSubTitle>
+
+    </CardBody>
+</Card>
+<div>
+    <Button Color="ButtonColor.Primary" Size="ButtonSize.Large" @onclick="() => LogUser()">Login</Button>
+</div>
+
+@if (isLogged)
+{
+    <p class="alert alert-success"> You are logged in!!!</p>
+}
+
+@code {
+    private string username { get; set; } = "";
+    private string password { get; set; } = "";
+    private bool isLogged = false;
+    private void LogUser()
+    {
+        if ((username == "admin" || username == "admin@github.io") && password == "WOPR")
+        {
+            isLogged = true;
+        }
+    }
+}
