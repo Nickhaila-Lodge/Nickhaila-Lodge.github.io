@@ -1,0 +1,65 @@
+﻿<h3>BMR Calculator</h3>
+
+<div>
+    <label>Weight (kg):</label>
+    <NumberInput TValue="double" @bind-Value="@weight" Placeholder="Enter your weight" />
+    <br />
+
+    <label>Height (cm):</label>
+    <NumberInput TValue="double" @bind-Value="@height" Placeholder="Enter your height" />
+    <br />
+
+    <label>Age (years):</label>
+    <NumberInput TValue="double" @bind-Value="@age" Placeholder="Enter your age" />
+    <br />
+
+    <label>Gender: </label>
+    <select class="form-select" @bind="gender">
+        <option value="">Choose your gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+    </select>
+
+    <hr />
+    <br />
+
+    <button @onclick="CalculateBMR" class="btn btn-primary">Calculate BMR</button>
+    <br />
+    <hr />
+
+    @if (bmr > 0)
+    {
+        <h4>Your BMR: @bmr kcal/day</h4>
+        <p>This is the number of calories your body needs at rest.</p>
+    }
+    else if ( bmr <= 0 || !string.IsNullOrEmpty(gender))
+    {
+        <p>Please enter values for weight, height, and age to calculate BMR.</p>
+    }
+</div>
+
+@code {
+    private double weight;
+    private double height;
+    private double age;
+    private string gender;
+    private double bmr;
+
+    private void CalculateBMR()
+    {
+        if (gender == "male")
+        {
+            // BMR calculation for men
+            bmr = (13.397 * weight) + (4.799 * height) - (5.677 * age) + 88.362;
+        }
+        else if (gender == "female")
+        {
+            // BMR calculation for women
+            bmr = (9.247 * weight) + (3.098 * height) - (4.330 * age) + 447.593;
+        }
+        else
+        {
+            bmr = 0; // Reset if no gender is selected
+        }
+    }
+}
